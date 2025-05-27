@@ -211,7 +211,7 @@ module Administrateurs
     end
 
     def type_de_champ_update_params
-      params.required(:type_de_champ).permit(:type_champ,
+      permitted_params = params.required(:type_de_champ).permit(:type_champ,
         :libelle,
         :description,
         :mandatory,
@@ -242,6 +242,8 @@ module Administrateurs
         :expression_reguliere_indications,
         :expression_reguliere_exemple_text,
         :expression_reguliere_error_message,
+        :limiter_procedures,
+        procedures: [],
         editable_options: [
           :cadastres,
           :unesco,
@@ -254,6 +256,12 @@ module Administrateurs
           :zones_humides,
           :znieff
         ])
+
+      if permitted_params[:procedures].present?
+        permitted_params[:procedures] = permitted_params[:procedures] != [""] ? permitted_params[:procedures].map { |id| Procedure.find(id) } : []
+      end
+
+      permitted_params
     end
 
     def draft
