@@ -1,3 +1,4 @@
 ---
 fr:
   not_found: Ce dossier est inconnu
+  not_initiator: Ce champ ne peut-être complété que par l'initiateur du dossier
