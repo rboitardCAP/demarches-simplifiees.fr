@@ -5,7 +5,7 @@
       .fr-info-text.fr-mb-4w
         - lien = link_to( " N° #{@champ.selected} ",dossier_url(@champ.selected), target: '_blank', rel: 'noopener' )
         = sanitize(dossier.text_summary(lien),tags: %w(a), attributes: %w(href target rel))
-- else 
+- elsif @champ.type_de_champ&.options&.dig("procedures_limit")&.to_i == 1 && @champ.dossier.user == current_user
   - if render_as_radios?
     .fr-fieldset__content
       - dossier_options_for(@champ).each do |item|
@@ -51,7 +51,9 @@
       .fr-info-text.fr-mb-4w 
         - lien = link_to( " N° #{@champ.selected} ",dossier_url(@champ.selected), target: '_blank', rel: 'noopener' )
         = sanitize(dossier.text_summary(lien),tags: %w(a), attributes: %w(href target rel))
-
-
+- else
+  .fr-fieldset__content.fr-mt-2w
+    %p{style: 'color: #0063CB;'}
+      = t('.not_initiator', scope: i18n_scope)
 
 

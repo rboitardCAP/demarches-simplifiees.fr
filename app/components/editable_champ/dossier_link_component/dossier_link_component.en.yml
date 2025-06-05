@@ -1,3 +1,4 @@
 ---
 en:
   not_found: This file is unknown
+  not_initiator: This field can only be completed by the file initiator
