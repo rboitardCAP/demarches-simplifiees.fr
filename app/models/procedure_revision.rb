@@ -537,6 +537,19 @@ class ProcedureRevision < ApplicationRecord
           from_type_de_champ.max_character_length,
           to_type_de_champ.max_character_length)
       end
+    elsif to_type_de_champ.dossier_link?
+      if from_type_de_champ.procedures_limit != to_type_de_champ.procedures_limit
+        changes << ProcedureRevisionChange::UpdateChamp.new(from_type_de_champ,
+          :procedures_limit,
+          from_type_de_champ.procedures_limit,
+          to_type_de_champ.procedures_limit)
+      end
+      if from_type_de_champ.procedures != to_type_de_champ.procedures
+        changes << ProcedureRevisionChange::UpdateChamp.new(from_type_de_champ,
+          :procedures,
+          from_type_de_champ.procedures,
+          to_type_de_champ.procedures)
+      end
     end
     changes
   end
