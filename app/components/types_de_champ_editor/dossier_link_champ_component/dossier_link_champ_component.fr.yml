@@ -1,0 +1,4 @@
+fr:
+  dossier_states:
+    limit_to_dossier_states: "Limiter à certains états de dossier"
+    select_dossier_states: "Sélectionner les états concernés"
