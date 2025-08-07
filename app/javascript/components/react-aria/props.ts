@@ -1,8 +1,9 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import * as s from 'superstruct';
 
 import type { Loader } from './hooks';
 
+// Existing items and schemas
 export const Item = s.object({
   label: s.string(),
   value: s.string(),
@@ -40,6 +41,8 @@ const ComboBoxPropsSchema = s.partial(
     hasLabelClassFrLabel: s.boolean()
   })
 );
+
+// Existing ComboBox prop schemas and types
 export const SingleComboBoxProps = s.assign(
   ComboBoxPropsSchema,
   s.partial(
@@ -89,6 +92,7 @@ export const RemoteComboBoxProps = s.assign(
     })
   )
 );
+
 export type SingleComboBoxProps = s.Infer<typeof SingleComboBoxProps> & {
   children?: ReactNode;
 };
@@ -99,3 +103,26 @@ export type RemoteComboBoxProps = s.Infer<typeof RemoteComboBoxProps> & {
   loader: Loader | string;
   onChange?: (item: Item | null) => void;
 };
+
+// Props for individual checkbox component
+export const CheckboxProps = s.object({
+  key: s.string(),  // Unique key for the checkbox
+  id: s.string(),   // Unique identifier for the checkbox
+  label: s.string(),  // Label to display next to the checkbox
+  checked: s.boolean(),  // Whether the checkbox is checked
+  onChange: s.func(),  // Change event handler
+  inputRef: s.optional(s.object({ current: s.optional(s.nullable(s.any())) }))  // Optional ref for the input element
+});
+
+export type CheckboxProps = s.Infer<typeof CheckboxProps>;
+
+// Props for the checkbox group component
+export const CheckboxGroupProps = s.object({
+  inputName: s.string(),  // Name attribute for the hidden input
+  itemSet: s.record(s.string(), s.string()),  // Dictionary with key -> label
+  initialSelectedItems: s.array(s.string()),  // Initial selected items
+  groupLabel: s.string(),  // Label for the checkbox group
+  alignHorizontally: s.boolean()  // Optional prop to align checkboxes horizontally
+});
+
+export type CheckboxGroupProps = s.Infer<typeof CheckboxGroupProps>;
