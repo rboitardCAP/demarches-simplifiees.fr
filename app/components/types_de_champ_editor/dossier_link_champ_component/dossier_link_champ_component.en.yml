@@ -1,0 +1,4 @@
+en:
+  dossier_states:
+    limit_to_dossier_states: "Limit to certain folder states"
+    select_dossier_states: "Select the relevant states"

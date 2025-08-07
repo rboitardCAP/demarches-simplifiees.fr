@@ -37,7 +37,7 @@ class TypesDeChampEditor::DossierLinkChampComponent < TypesDeChampEditor::BaseCh
       input_name: @form.field_name(:dossier_states, multiple: true),
       item_set: dossier_states_item_set,
       initial_selected_items: form.object.dossier_states,
-      group_label: "Sélectionner les états concernés",
+      group_label: t(".dossier_states.select_dossier_states"),
       align_horizontally: true
     }
   end
