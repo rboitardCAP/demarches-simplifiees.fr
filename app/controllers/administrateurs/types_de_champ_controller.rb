@@ -228,6 +228,7 @@ module Administrateurs
         :expression_reguliere_error_message,
         :nature,
         :procedures_limit,
+        :dossier_states_limit,
         procedures: [],
         editable_options: [
           :cadastres,

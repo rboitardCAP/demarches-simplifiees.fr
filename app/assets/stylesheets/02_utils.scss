@@ -205,6 +205,10 @@
   padding-left: $default-padding;
 }
 
+.border-top-light {
+  border-top: 1px solid var(--border-default-grey);
+}
+
 .box-shadow-none {
   box-shadow: none !important;
 }
