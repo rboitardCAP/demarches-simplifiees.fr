@@ -338,7 +338,7 @@ export function MultiGroupComboBox(maybeProps: MultiGroupComboBoxProps) {
   const formResetRef = useOnFormReset(onReset);
 
   return (
-    <div className={`fr-ds-combobox__multiple ${className ? className : ''}`}>
+    <div className={`fr-mb-3w ${className ? className : ''}`}>
       <ComboBox
         inputRef={inputRef}
         menuTrigger="focus"
