@@ -5,3 +5,6 @@
     .fr-toggle
       = form.check_box :dossier_states_limit, id: dom_id(type_de_champ, :states_limit), class: 'fr-toggle__input'
       = form.label :dossier_states_limit, "Limiter à certains états de dossier", for: dom_id(type_de_champ, :states_limit), class: 'fr-toggle__label fr-label'
+
+    - if form.object.dossier_states_limit?
+      = render ReactComponent.new "Checkbox/CheckboxGroup", **checkbox_group_props
