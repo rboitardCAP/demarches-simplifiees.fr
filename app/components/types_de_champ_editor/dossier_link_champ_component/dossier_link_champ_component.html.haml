@@ -1,2 +1,7 @@
 %react-fragment.flex-1
-    = render ReactComponent.new "ComboBox/MultiGroupComboBox", **react_props
+  = render ReactComponent.new "ComboBox/MultiGroupComboBox", **react_props
+
+  .fr-pt-2w.border-top-light
+    .fr-toggle
+      = form.check_box :dossier_states_limit, id: dom_id(type_de_champ, :states_limit), class: 'fr-toggle__input'
+      = form.label :dossier_states_limit, "Limiter à certains états de dossier", for: dom_id(type_de_champ, :states_limit), class: 'fr-toggle__label fr-label'
