@@ -159,7 +159,8 @@ class TypeDeChamp < ApplicationRecord
                  :header_section_level,
                  :referentiel_mapping,
                  :procedures_limit,
-                 :dossier_states_limit
+                 :dossier_states_limit,
+                 :dossier_states
 
   has_many :revision_types_de_champ, -> { revision_ordered }, class_name: 'ProcedureRevisionTypeDeChamp', dependent: :destroy, inverse_of: :type_de_champ
 
@@ -718,7 +719,7 @@ class TypeDeChamp < ApplicationRecord
       :expression_reguliere, :expression_reguliere_indications, :expression_reguliere_exemple_text, :expression_reguliere_error_message
     ],
     type_champs.fetch(:referentiel) => [:referentiel_mapping],
-    type_champs.fetch(:dossier_link) => [:procedures_limit, :dossier_states_limit]
+    type_champs.fetch(:dossier_link) => [:procedures_limit, :dossier_states_limit, :dossier_states]
   }
 
   def clean_options

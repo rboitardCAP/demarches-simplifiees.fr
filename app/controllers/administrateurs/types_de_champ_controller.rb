@@ -230,6 +230,7 @@ module Administrateurs
         :procedures_limit,
         :dossier_states_limit,
         procedures: [],
+        dossier_states: [],
         editable_options: [
           :cadastres,
           :unesco,
