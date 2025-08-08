@@ -35,10 +35,19 @@ class EditableChamp::DossierLinkComponent < EditableChamp::EditableChampBaseComp
     options = []
 
     type_champ.procedures.each do |procedure|
-      dossiers = procedure.dossiers
-        .visible_by_user_or_administration
-        .where(user_id: current_user.id, state: Dossier::SOUMIS)
-        .order(:id)
+      # If dossier states have been limited, restrict by the limited states. Else return all dossiers.
+      if dossier_states_limited?
+        dossiers = procedure.dossiers
+          .visible_by_user_or_administration
+          .where(user_id: current_user.id, state: Dossier::SOUMIS)
+          .where(state: dossier_states)
+          .order(:id)
+      else
+        dossiers = procedure.dossiers
+          .visible_by_user_or_administration
+          .where(user_id: current_user.id, state: Dossier::SOUMIS)
+          .order(:id)
+      end
 
       options << {
         value: "separator_#{procedure.id}",
@@ -109,6 +118,15 @@ class EditableChamp::DossierLinkComponent < EditableChamp::EditableChampBaseComp
 
   def procedures_limit_zero?
     @champ.type_de_champ&.options&.dig("procedures_limit")&.to_i == 0
+  end
+
+  def dossier_states_limited?
+    limit = @champ.type_de_champ&.options&.dig("dossier_states_limit")
+    limit.present? && limit.to_i != 0
+  end
+
+  def dossier_states
+    @champ.type_de_champ&.options&.dig("dossier_states")
   end
 
   def show_info_text?
