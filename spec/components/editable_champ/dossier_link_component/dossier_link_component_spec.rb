@@ -38,6 +38,30 @@ RSpec.describe EditableChamp::DossierLinkComponent, type: :component do
     end
   end
 
+  # Helper method to generate the "no dossier" option for a given procedure ID
+  def no_dossier_option(procedure_id)
+    {
+      label: "Vous n’avez déposé aucun dossier sur cette démarche. ",
+      value: "no_dossier_#{procedure_id}"
+    }
+  end
+
+  # Helper method to generate the dossier option for a given dossier
+  def dossier_option(dossier)
+    {
+      label: "N° #{dossier.id} - déposé le #{dossier.depose_at.strftime('%d/%m/%Y')}",
+      value: dossier.id.to_s
+    }
+  end
+
+  # Helper method to generate the procedure separator option for a given procedure
+  def procedure_separator_option(procedure)
+    {
+      label: "-- Démarche : #{procedure.libelle} --",
+      value: "separator_#{procedure.id}"
+    }
+  end
+
   # Setup before each test
   before do
     allow_any_instance_of(described_class).to receive(:current_user).and_return(current_user)
@@ -67,12 +91,12 @@ RSpec.describe EditableChamp::DossierLinkComponent, type: :component do
       options = subject.send(:dossier_options_for, champ)
 
       # Verify the options include specific labels and values
-      expect(options).to include({ :label => "-- Démarche : Procedure 1 --", :value => "separator_1" })
-      expect(options).to include({ :label => "N° " + dossiers_en_construction[0].id.to_s + " - déposé le " + dossiers_en_construction[0].depose_at.strftime('%d/%m/%Y'), :value => dossiers_en_construction[0].id.to_s})
-      expect(options).to include({ :label => "-- Démarche : Procedure 2 --", :value => "separator_2" })
-      expect(options).to include({ :label => "Vous n’avez déposé aucun dossier sur cette démarche. ", :value => "no_dossier_2" })
-      expect(options).to include({ :label => "-- Démarche : Procedure 3 --", :value => "separator_3" })
-      expect(options).to include({ :label => "Vous n’avez déposé aucun dossier sur cette démarche. ", :value => "no_dossier_3" })
+      expect(options).to include(procedure_separator_option(procedures[0]))
+      expect(options).to include(dossier_option(dossiers_en_construction[0]))
+      expect(options).to include(procedure_separator_option(procedures[1]))
+      expect(options).to include(no_dossier_option(2))
+      expect(options).to include(procedure_separator_option(procedures[2]))
+      expect(options).to include(no_dossier_option(3))
     end
   end
 
@@ -86,7 +110,7 @@ RSpec.describe EditableChamp::DossierLinkComponent, type: :component do
       props = subject.send(:react_props)
 
       # Verify the props include specific items, placeholder, name, id, and class
-      expect(props[:items]).to include({ value: "separator_1", label: "-- Démarche : Procedure 1 --" })
+      expect(props[:items]).to include(procedure_separator_option(procedures[0]))
       expect(props[:placeholder]).to eq('Sélectionnez un dossier')
       expect(props[:name]).to eq("dossier[champs_public_attributes][#{champ.public_id}][value]")
       expect(props[:id]).to eq(champ.input_id)
@@ -216,11 +240,11 @@ RSpec.describe EditableChamp::DossierLinkComponent, type: :component do
 
         options = subject.send(:dossier_options_for, champ)
 
-        expect(options).to include({ :label => "-- Démarche : Procedure 1 --", :value => "separator_1" })
-        expect(options).not_to include({ :label => "N° #{dossiers_brouillon[0].id} - déposé le #{dossiers_brouillon[0].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_brouillon[0].id.to_s })
-        expect(options).to include({ :label => "N° #{dossiers_en_construction[0].id} - déposé le #{dossiers_en_construction[0].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_en_construction[0].id.to_s })
-        expect(options).to include({ :label => "N° #{dossiers_en_construction[1].id} - déposé le #{dossiers_en_construction[1].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_en_construction[1].id.to_s })
-        expect(options).not_to include({ :label => "N° #{dossiers_accepte[0].id} - déposé le #{dossiers_accepte[0].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_accepte[0].id.to_s })
+        expect(options).to include(procedure_separator_option(procedures[0]))
+        expect(options).not_to include(dossier_option(dossiers_brouillon[0]))
+        expect(options).to include(dossier_option(dossiers_en_construction[0]))
+        expect(options).to include(dossier_option(dossiers_en_construction[1]))
+        expect(options).not_to include(dossier_option(dossiers_accepte[0]))
       end
     end
 
@@ -233,8 +257,12 @@ RSpec.describe EditableChamp::DossierLinkComponent, type: :component do
 
         options = subject.send(:dossier_options_for, champ)
 
-        expect(options).to include({ :label => "-- Démarche : Procedure 1 --", :value => "separator_1" })
-        expect(options).to include({ :label => "Vous n’avez déposé aucun dossier sur cette démarche. ", :value => "no_dossier_1" })
+        expect(options).to include(procedure_separator_option(procedures[0]))
+        expect(options).to include(no_dossier_option(1))
+        expect(options).to include(procedure_separator_option(procedures[1]))
+        expect(options).to include(no_dossier_option(2))
+        expect(options).to include(procedure_separator_option(procedures[2]))
+        expect(options).to include(no_dossier_option(3))
       end
     end
   end
@@ -258,11 +286,11 @@ RSpec.describe EditableChamp::DossierLinkComponent, type: :component do
 
         options = subject.send(:dossier_options_for, champ)
 
-        expect(options).to include({ :label => "-- Démarche : Procedure 1 --", :value => "separator_1" })
-        expect(options).not_to include({ :label => "N° #{dossiers_brouillon[0].id} - déposé le #{dossiers_brouillon[0].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_brouillon[0].id.to_s })
-        expect(options).to include({ :label => "N° #{dossiers_en_construction[0].id} - déposé le #{dossiers_en_construction[0].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_en_construction[0].id.to_s })
-        expect(options).to include({ :label => "N° #{dossiers_en_construction[1].id} - déposé le #{dossiers_en_construction[1].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_en_construction[1].id.to_s })
-        expect(options).to include({ :label => "N° #{dossiers_accepte[0].id} - déposé le #{dossiers_accepte[0].depose_at.strftime('%d/%m/%Y')}", :value => dossiers_accepte[0].id.to_s })
+        expect(options).to include(procedure_separator_option(procedures[0]))
+        expect(options).not_to include(dossier_option(dossiers_brouillon[0]))
+        expect(options).to include(dossier_option(dossiers_en_construction[0]))
+        expect(options).to include(dossier_option(dossiers_en_construction[1]))
+        expect(options).to include(dossier_option(dossiers_accepte[0]))
       end
     end
   end
