@@ -30,4 +30,27 @@ class TypesDeChampEditor::DossierLinkChampComponent < TypesDeChampEditor::BaseCh
 
     items
   end
+
+  # Generates properties for the checkbox group
+  def checkbox_group_props
+    {
+      input_name: @form.field_name(:dossier_states, multiple: true),
+      item_set: dossier_states_item_set,
+      initial_selected_items: form.object.dossier_states,
+      group_label: t(".dossier_states.select_dossier_states"),
+      align_horizontally: true
+    }
+  end
+
+  # Generates item set for dossier states
+  #
+  # @return [Hash] A hash where keys are dossier states (excluding 'brouillon') and values are their human-readable names
+  def dossier_states_item_set
+    # Filter out the 'brouillon' state and create a hash with state keys and their human-readable names
+    Dossier.states.keys.filter do |state|
+      state != Dossier.states[:brouillon]
+    end.index_with do |state|
+      Dossier.human_attribute_name("state.#{state}")
+    end
+  end
 end

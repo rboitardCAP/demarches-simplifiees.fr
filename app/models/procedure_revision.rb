@@ -554,6 +554,18 @@ class ProcedureRevision < ApplicationRecord
           from_type_de_champ.procedures,
           to_type_de_champ.procedures)
       end
+      if from_type_de_champ.dossier_states_limit != to_type_de_champ.dossier_states_limit
+        changes << ProcedureRevisionChange::UpdateChamp.new(from_type_de_champ,
+          :dossier_states_limit,
+          from_type_de_champ.dossier_states_limit,
+          to_type_de_champ.dossier_states_limit)
+      end
+      if from_type_de_champ.dossier_states != to_type_de_champ.dossier_states
+        changes << ProcedureRevisionChange::UpdateChamp.new(from_type_de_champ,
+          :dossier_states,
+          from_type_de_champ.dossier_states,
+          to_type_de_champ.dossier_states)
+      end
     end
     changes
   end

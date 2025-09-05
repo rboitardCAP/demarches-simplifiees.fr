@@ -90,6 +90,10 @@ fr:
     add_procedures_limit: L'option « Limiter à certaines démarches » a été activée pour le champ « %{label} ».
     remove_procedures_limit: L'option « Limiter à certaines démarches » a été désactivée pour le champ « %{label} ».
     update_procedures: "Les démarches pour le champ « %{label} » ont été modifiées :"
+
+    add_dossier_states_limit: L'option « Limiter à certains états de dossier » a été activée pour le champ « %{label} ».
+    remove_dossier_states_limit: L'option « Limiter à certains états de dossier » a été désactivée pour le champ « %{label} ».
+    update_dossier_states: "Les états de dossier pour le champ « %{label} » ont été modifiés :"
   private:
     add: L’annotation privée « %{label} » a été ajoutée.
     remove: L’annotation privée « %{label} » a été supprimée.
