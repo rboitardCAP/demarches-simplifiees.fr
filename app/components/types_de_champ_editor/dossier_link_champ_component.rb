@@ -14,8 +14,9 @@ class TypesDeChampEditor::DossierLinkChampComponent < TypesDeChampEditor::BaseCh
       name: @form.field_name(:procedures, multiple: true),
       selected_keys: @type_de_champ.procedures.map { |procedure| procedure.id.to_s },
       'aria-label': "Liste des démarches",
-      secondary_label: "Démarches concernées",
-      no_items_label: "Aucune démarche sélectionnée"
+      secondary_label: "Démarche(s) concernée(s)",
+      no_items_label: "Aucune démarche sélectionnée",
+      has_label_class_fr_label: false
     }
   end
 
