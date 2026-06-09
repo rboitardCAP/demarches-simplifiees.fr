@@ -25,15 +25,15 @@
             %label.fr-label{ for: "#{@champ.input_id}_blank" }
               Non renseigné
       - if show_info_text?
-        .fr-info-text.fr-mb-4w
+        .fr-info-text.fr-mb-4w.fr-ml-1w{:style => 'display: inline;'}
           %span
             - lien = link_to( "N° #{@champ.selected}",dossier_url(@champ.selected), target: '_blank', rel: 'noopener' )
             = sanitize(dossier.text_summary(lien),tags: %w(a), attributes: %w(href target rel))
   - elsif render_as_combobox?
-    %react-fragment.flex-1.fr-mt-2w
+    %react-fragment.flex-1.fr-mt-1w
       = render ReactComponent.new "ComboBox/SingleComboBox", **react_props
       - if show_info_text?
-        .fr-info-text.fr-mb-4w
+        .fr-info-text.fr-mb-4w{:style => 'display: inline;'}
           %span
             - lien = link_to( "N° #{@champ.selected}",dossier_url(@champ.selected), target: '_blank', rel: 'noopener external', class: 'fr-link')
             = sanitize(dossier.text_summary(lien),tags: %w(a), attributes: %w(href target rel))
@@ -58,8 +58,8 @@
         translate: 'no' }
 
     - if show_info_text?
-      .fr-info-text.fr-mb-4w
-        - lien = link_to( " N° #{@champ.selected} ",dossier_url(@champ.selected), target: '_blank', rel: 'noopener' )
+      .fr-info-text.fr-mb-4w{:style => 'display: inline;'}
+        - lien = link_to( "N° #{@champ.selected}",dossier_url(@champ.selected), target: '_blank', rel: 'noopener' )
         = sanitize(dossier.text_summary(lien),tags: %w(a), attributes: %w(href target rel))
 
 

@@ -735,7 +735,9 @@ class Dossier < ApplicationRecord
       ]
     else
       parts = [
-        "Dossier déposé le ",
+        "Dossier ",
+        lien,
+        " - déposé le ",
         depose_at.strftime("%d/%m/%Y"),
         " sur la démarche ",
         "\"#{procedure.libelle}\"",
